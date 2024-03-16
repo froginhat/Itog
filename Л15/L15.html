@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        html, body{
+        margin:0;
+        overflow:hidden;
+    }
+    #blueRect{
+        width:100px;
+        height:100px;
+        background-color:blue;
+    }
+    </style>
+</head>
+<body>
+<div id="blueRect"></div>
+ 
+<script>
+function setColor(e){
+     
+    if(e.type==="mouseover")
+        e.target.style.backgroundColor = "red";
+    else if(e.type==="mouseout")
+        e.target.style.backgroundColor = "blue";
+}
+var blueRect = document.getElementById("blueRect");
+blueRect.addEventListener("mouseover", setColor);
+blueRect.addEventListener("mouseout", setColor);
+</script>
+<script>
+    function moveRect(e){
+         
+        var blueRect = document.getElementById("blueRect");
+        // получаем стиль для blueRect
+        var cs = window.getComputedStyle(blueRect);
+         
+        var left = parseInt(cs.marginLeft);
+        var top = parseInt(cs.marginTop);
+         
+        switch(e.key){
+             
+            case "ArrowLeft":  // если нажата клавиша влево
+                if(left>0)
+                    blueRect.style.marginLeft = left - 10 + "px";
+                break;
+            case "ArrowTop":   // если нажата клавиша вверх
+                if(top>0)
+                    blueRect.style.marginTop = top - 10 + "px";
+                break;
+            case "ArrowRight":   // если нажата клавиша вправо
+                if(left < document.documentElement.clientWidth - 100)
+                    blueRect.style.marginLeft = left + 10 + "px";
+                break;
+            case "ArrowDown":   // если нажата клавиша вниз
+                if(top < document.documentElement.clientHeight - 100)
+                    blueRect.style.marginTop = top + 10 + "px";
+                break;
+        }
+    }
+     
+    addEventListener("keydown", moveRect);
+    </script>
+    <script>
+        var ball = document.getElementById("blueRect");
+
+ball.onmousedown = function(e) { // 1. отследить нажатие
+
+  // подготовить к перемещению
+  // 2. разместить на том же месте, но в абсолютных координатах
+  ball.style.position = 'absolute';
+  moveAt(e);
+  // переместим в body, чтобы мяч был точно не внутри position:relative
+  document.body.appendChild(ball);
+
+  ball.style.zIndex = 1000; // показывать мяч над другими элементами
+
+  // передвинуть мяч под координаты курсора
+  // и сдвинуть на половину ширины/высоты для центрирования
+  function moveAt(e) {
+    ball.style.left = e.pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = e.pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  // 3, перемещать по экрану
+  document.onmousemove = function(e) {
+    moveAt(e);
+  }
+
+  // 4. отследить окончание переноса
+  ball.onmouseup = function() {
+    document.onmousemove = null;
+    ball.onmouseup = null;
+  }
+}
+
+
+ball.onpointerdown = log;
+    ball.onpointerup = log;
+    ball.onpointermove = log;
+    ball.onpointercancel = log;
+
+    let lastEventType;
+    let n = 1;
+    function log(event) {
+      if (lastEventType == event.type) {
+        n++;
+        text.value = text.value.replace(/.*\n$/, `${event.type} * ${n}\n`);
+        return;
+      }
+      lastEventType = event.type;
+      n = 1;
+      text.value += event.type + '\n';
+      text.scrollTop = 1e9;
+    }
+    </script>
+      <textarea id="text" style="display:block;width:300px;height:100px"></textarea>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<html>
+<head>
+  <script type="text/javascript">
+    function timeMsg()
+    {
+    var t=setTimeout("alertMsg()",3000);
+    }
+    function alertMsg()
+    {
+    alert("Привет");
+    }
+    </script>
+    
+    <script type="text/javascript">
+      var c=0;
+      var t;
+      var timer_is_on=0;
+      
+      function timedCount()
+      {
+      document.getElementById('txt').value=c;
+      c=c+1;
+      t=setTimeout("timedCount()",1000);
+      }
+      
+      function doTimer()
+      {
+      if (!timer_is_on)
+        {
+        timer_is_on=1;
+        timedCount();
+        }
+      }
+      </script> 
+
+<script type="text/javascript">
+  function startTime()
+  {
+  var today=new Date();
+  var h=today.getHours();
+  var m=today.getMinutes();
+  var s=today.getSeconds();
+  // добавить нуль перед числами <10
+  m=checkTime(m);
+  s=checkTime(s);
+  document.getElementById('txt1').innerHTML=h+":"+m+":"+s;
+  t=setTimeout('startTime()',500);
+  }
+  
+  function checkTime(i)
+  {
+  if (i<10)
+    {
+    i="0" + i;
+    }
+  return i;
+  }
+  </script>
+  
+ </head>
+ <body onclick="alert(`сюда всплытие не дойдёт`)" onload="startTime()">
+    <input value="Нажми меня" onclick="alert('Клик!')" type="button"> 
+
+    <script>
+        function countRabbits() {
+          for(let i=1; i<=3; i++) {
+            alert("Кролик номер " + i);
+          }
+        }
+      </script>
+
+      <input type="button" onclick="countRabbits()" value="Считать кроликов!">
+
+      <input id="elem1" type="button" value="Нажми меня!">
+
+<script>
+  elem1.onclick = function() {
+    alert('Спасибо');
+  };
+</script>
+
+<button onclick="alert(this.innerHTML)">Нажми меня</button>
+
+<input id="elem2" type="button" value="Нажми меня"/>
+
+
+<script>
+  function handler1() {
+    alert('Спасибо!');
+  };
+
+
+  function handler2() {
+    alert('Спасибо ещё раз!');
+  }
+  elem2.onclick = () => alert("Привет");
+  elem2.addEventListener("click", handler1); // Спасибо!
+  elem2.addEventListener("click", handler2); // Спасибо ещё раз!
+</script>
+
+<input id="elem3" type="button" value="Нажми меня"/>
+
+<script>
+var div = document.getElementById("elem3");
+var listener = function (event) {
+  /* do something here */
+};
+div.addEventListener("click", listener, false);
+div.removeEventListener("click", listener, false);
+</script>
+
+
+
+<style>
+    body * {
+      margin: 10px;
+      border: 1px solid blue;
+    }
+  </style>
+  
+  
+  <form onclick="alert('form')">FORM
+    <div onclick="alert('div')">DIV
+      <p onclick="alert('p')">P</p>
+    </div>
+  </form>
+  
+  <button onclick="event.stopPropagation()">Кликни меня</button>
+
+  <form>
+    <input type="button" value="Показать сигнальное окно через 3 секунды" onClick="timeMsg()" />
+    </form>
+    
+
+  <form>
+      <input type="button" value="Начать отсчет!" onClick="doTimer()">
+      <input type="text" id="txt">
+  </form>
+      <p>Щелкните на кнопке выше. Поле ввода начнет отсчет до бесконечности, начиная с 0.</p>
+      
+
+      <div id="txt1"></div>
+
+</body>
+</html>
